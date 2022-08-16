@@ -27,24 +27,7 @@
 		ethersProvider
 	);
 
-	/* 	export const allowance = async () => {
-		let allowance = await USDCtcontractReadOnly.allowance($signerAddress, $GWTContractAddress);
-		let formatAllowance = ethers.utils.formatEther(allowance);
-		console.log('El allowance es: ', formatAllowance);
-		//return allowance;
-
-		if (allowance == 0) {
-			console.log('apa');
-			$allowanceStore = false;
-			return false;
-		} else {
-			console.log('tutto benne');
-			$allowanceStore = true;
-			return true;
-		}
-	}; */
-
-	const amountToApprove = ethers.utils.parseEther('1');
+	const amountToApprove = ethers.utils.parseEther('99999');
 
 	async function approveMe() {
 		//const tx = await contract.approve(GWTContract, amountToApprove);
@@ -55,23 +38,7 @@
 
 		await $provider.waitForTransaction(txReceipt);
 
-		//await allowance(); // SOLO NO FUNCABA y por eso abajo lo puse entero
 		await getAllowance($signerAddress, $GWTContractAddress);
-
-		/* 		let allowance = await contractReadOnly.allowance($signerAddress, GWTContract);
-		let formatAllowance = ethers.utils.formatEther(allowance);
-		console.log('El allowance es: ', formatAllowance);
-
-		if (allowance == 0) {
-			console.log('apa');
-			$allowanceStore = false;
-			return false;
-		} else {
-			console.log('tutto benne');
-			$allowanceStore = true;
-			return true;
-		}
- */
 		return tx.hash;
 	}
 

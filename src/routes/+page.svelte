@@ -1,7 +1,5 @@
 <script lang="ts">
 	// TODO
-	// ALLOWANCE PASARLO A STORE ASI EJECUTA EN BUY Y SELL
-	// LA FUNCION BURN TIRA ERROR DE HEADER NOT FOUND -> parece q es bug por los nodos
 
 	import {
 		connected,
@@ -55,24 +53,17 @@
 <main>
 	<h1>GersteWein Tokens</h1>
 
-	<!-- 	<button on:click={() => getBalance($signerAddress)}>balances !</button>
-	<button on:click={() => ($allowanceStore = !$allowanceStore)}>allowance</button>
-	{$allowanceStore} -->
-
 	<ConnectEthers />
 	{#if $connected}
 		<Balances {delayMs} />
 
-		<!-- 		{#key $txMinada}
- -->
 		<CheckAllowance {delayMs} />
 		{#if $allowanceStore == true}
 			<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
 				<BuyGersteToken />
 			</div>
 		{/if}
-		<!-- 		{/key}
- -->
+
 		<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
 			<BurnGersteToken />
 		</div>
