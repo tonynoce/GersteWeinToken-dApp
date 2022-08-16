@@ -27,7 +27,7 @@
 		ethersProvider
 	);
 
-	const amountToApprove = ethers.utils.parseEther('99999');
+	const amountToApprove = ethers.utils.parseEther('999999');
 
 	async function approveMe() {
 		//const tx = await contract.approve(GWTContract, amountToApprove);
@@ -61,9 +61,7 @@
 					<p transition:fade={{ delay: delayMs + 800, duration: 250 }}>
 						La primera vez hay que aprobar el contrato para
 					</p>
-					<p transition:fade={{ delay: delayMs + 900, duration: 250 }}>
-						poder interactuar con la blockchain
-					</p>
+					<p transition:fade={{ delay: delayMs + 900, duration: 250 }}>poder interactuar.</p>
 				</div>
 			{/if}
 		{/key}
