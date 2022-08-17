@@ -32,6 +32,8 @@
 </script>
 
 <main>
+	<!-- 	{#key $connected}
+ -->
 	{#if !$connected}
 		<button on:click={() => connectToDapp()}> Conectar Metamask </button>
 	{:else}
@@ -47,6 +49,8 @@
 			</p>
 		</div>
 	{/if}
+	<!-- 	{/key}
+ -->
 </main>
 
 <style>

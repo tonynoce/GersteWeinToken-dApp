@@ -34,7 +34,13 @@
 	}
 </script>
 
-<img src="./src/token_icons/usd-coin-usdc-logo.svg" alt="USD icon" width="40" height="40" />
+<!-- <img src="../src/token_icons/usd-coin-usdc-logo.svg" alt="USD icon" width="40" height="40" /> -->
+<img
+	src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg"
+	alt="USD icon"
+	width="40"
+	height="40"
+/>
 {#await USDCBalance()}
 	<p>USDCt: Cargando...</p>
 {:then}

@@ -54,3 +54,4 @@ export const getAllowance = async(owner, spender) => {
         return true;
     }
 }
+

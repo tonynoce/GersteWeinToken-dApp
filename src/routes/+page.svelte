@@ -4,11 +4,12 @@
 	// ADD TOKENS
 	// CHECK CHAIN ID
 	// CHECK DISCONNECTION
+	// CAPAZ HAIGA Q PRIMERO CHEQUEAR CONEXCION Y DSP RED
 
 	import {
 		connected,
 		provider,
-		//chainId,
+		chainId,
 		defaultEvmStores,
 		signer,
 		signerAddress,
@@ -26,7 +27,7 @@
 	import BuyGersteToken from '../components/buyGersteToken_v3.svelte';
 	import BurnGersteToken from '../components/burnGersteToken.svelte';
 
-	import { txHash, allowanceStore, txMinada } from '../stores/stores';
+	import { txHash, allowanceStore } from '../stores/stores';
 	import { GWTContractAddress, USDCtContractAddress } from '../stores/stores';
 	import { GWTAbi, USDCtAbi } from '../stores/abi';
 	import { getBalance } from '../stores/stores';
@@ -49,6 +50,16 @@
 		}
 	});
 
+	let checkChainId = () => {
+		if ($chainId == 80001) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	//$: checkChainId();
+
 	let delayMs = 1200;
 </script>
 
@@ -56,25 +67,35 @@
 
 <main>
 	<h1>GersteWein Tokens</h1>
+	{#key $chainId}
+		{#if $chainId == 80001}
+			<ConnectEthers />
+			{#key $connected}
+				{#if $connected == true}
+					<Balances {delayMs} />
 
-	<ConnectEthers />
-	{#if $connected}
-		<Balances {delayMs} />
+					<CheckAllowance {delayMs} />
+					<div class="flex-container">
+						{#if $allowanceStore == true}
+							<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
+								<BuyGersteToken />
+							</div>
+						{/if}
 
-		<CheckAllowance {delayMs} />
-		<div class="flex-container">
-			{#if $allowanceStore == true}
-				<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
-					<BuyGersteToken />
-				</div>
-			{/if}
-
-			<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
-				<BurnGersteToken />
-			</div>
-		</div>
-		<TxHashComponent {delayMs} />
-	{/if}
+						<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
+							<BurnGersteToken />
+						</div>
+					</div>
+					<TxHashComponent {delayMs} />
+				{:else}
+					<h2>Conectate a la red Mumbai de Polygon</h2>
+				{/if}
+			{/key}
+		{:else}
+			<h2>Conectate con Metamask</h2>
+			<ConnectEthers />
+		{/if}
+	{/key}
 </main>
 
 <style>
