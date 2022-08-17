@@ -11,22 +11,27 @@
 </script>
 
 <main>
+	<div>
+		<p transition:fade={{ delay: delayMs * 2.5, duration: 500 }}>
+			Su saldos son:
+			<br />
+		</p>
+	</div>
 	<div id="accountBalances" class="flex-container">
-		<div>
-			<p transition:fade={{ delay: delayMs * 2.5, duration: 500 }}>
-				Su saldos son:
-				<br />
-			</p>
-		</div>
-		<!-- 		{#key $txMinada}
- -->
 		<div>
 			<p transition:fade={{ delay: delayMs * 3, duration: 250 }}><UsdCtBalance /></p>
 		</div>
 		<div>
 			<p transition:fade={{ delay: delayMs * 3.6, duration: 250 }}><GeWT /></p>
 		</div>
-		<!-- 		{/key}
- -->
 	</div>
 </main>
+
+<style>
+	.flex-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: justify;
+	}
+</style>

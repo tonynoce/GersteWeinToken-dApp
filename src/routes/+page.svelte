@@ -1,5 +1,9 @@
 <script lang="ts">
 	// TODO
+	// ICONS !
+	// ADD TOKENS
+	// CHECK CHAIN ID
+	// CHECK DISCONNECTION
 
 	import {
 		connected,
@@ -58,16 +62,17 @@
 		<Balances {delayMs} />
 
 		<CheckAllowance {delayMs} />
-		{#if $allowanceStore == true}
-			<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
-				<BuyGersteToken />
+		<div class="flex-container">
+			{#if $allowanceStore == true}
+				<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
+					<BuyGersteToken />
+				</div>
+			{/if}
+
+			<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
+				<BurnGersteToken />
 			</div>
-		{/if}
-
-		<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
-			<BurnGersteToken />
 		</div>
-
 		<TxHashComponent {delayMs} />
 	{/if}
 </main>
@@ -84,5 +89,11 @@
 		color: white;
 		font-family: sans-serif;
 		text-align: center;
+	}
+	.flex-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: justify;
 	}
 </style>

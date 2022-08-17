@@ -41,28 +41,16 @@
 		<p transition:fade={{ delay: 250, duration: 300 }}>Conectese a la aplicación por favor</p>
 	{:else}
 		<div id="accountInfo" transition:fade={{ delay: delayMs, duration: 500 }}>
-			<p transition:fade={{ delay: delayMs, duration: 500 }}>Conectado con la cuenta :</p>
-			<p transition:fade={{ delay: delayMs + 200, duration: 500 }}>
+			<p transition:fade={{ delay: delayMs, duration: 500 }}>Conectado con la cuenta:</p>
+			<p class="signerAddress" transition:fade={{ delay: delayMs + 200, duration: 500 }}>
 				{$signerAddress}
 			</p>
 		</div>
-		<!-- 		<div id="accountBalances" class="flex-container"> -->
-		<!-- 			<div>
-				<p transition:fade={{ delay: delayMs * 2.5, duration: 500 }}>
-					Su saldos son:
-
-					<br />
-				</p>
-			</div>
-			<div>
-				<p transition:fade={{ delay: delayMs * 3, duration: 250 }}><UsdCtBalance /></p>
-			</div>
-			<div>
-				<p transition:fade={{ delay: delayMs * 3.6, duration: 250 }}><GeWT /></p>
-			</div> -->
-		<!-- 		</div> -->
 	{/if}
 </main>
 
 <style>
+	.signerAddress {
+		font-weight: bold;
+	}
 </style>
