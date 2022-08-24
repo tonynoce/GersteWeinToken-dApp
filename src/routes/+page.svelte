@@ -1,10 +1,10 @@
 <script lang="ts">
 	// TODO
 	// ICONS !
-	// ADD TOKENS
-	// CHECK CHAIN ID
 	// CHECK DISCONNECTION
-	// CAPAZ HAIGA Q PRIMERO CHEQUEAR CONEXCION Y DSP RED
+	// FAUCET DE PRUEBA ?
+	//
+	// TODO HANDLE NO METAMASK INSTALLED STORES JS
 
 	import {
 		connected,
@@ -31,6 +31,13 @@
 	import { GWTContractAddress, USDCtContractAddress } from '../stores/stores';
 	import { GWTAbi, USDCtAbi } from '../stores/abi';
 	import { getBalance } from '../stores/stores';
+	import {
+		handleAccountsChanged,
+		handleChainChanged,
+		addGersteToken,
+		addUSDCtToken,
+		getWindowEthereum
+	} from '../stores/metamask';
 
 	// contracts store
 
@@ -55,6 +62,10 @@
 	} // no carga el modulo de alert
 
 	let delayMs = 1200;
+
+	getWindowEthereum();
+	handleChainChanged();
+	handleAccountsChanged();
 </script>
 
 <head> <title>GersteWein Tokens !</title> </head>
@@ -62,37 +73,47 @@
 <main>
 	<h1>GersteWein Tokens</h1>
 	{#key $connected}
-		{#key $chainId}
-			<ConnectEthers />
-			{#if $chainId == 80001}
-				{#if $connected == true}
-					<Balances {delayMs} />
+		<!-- {#key $chainId} -->
+		<ConnectEthers />
+		<!-- 			{#if $chainId == 80001}
+ -->
+		{#if $connected == true}
+			<Balances {delayMs} />
 
-					<CheckAllowance {delayMs} />
-					<div class="flex-container">
-						{#if $allowanceStore == true}
-							<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
-								<BuyGersteToken />
-							</div>
-
-							<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
-								<BurnGersteToken />
-							</div>
-						{:else}
-							<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
-								<BurnGersteToken />
-							</div>
-						{/if}
+			<CheckAllowance {delayMs} />
+			<div class="flex-container">
+				{#if $allowanceStore == true}
+					<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
+						<BuyGersteToken />
 					</div>
-					<TxHashComponent {delayMs} />
-					<!-- 				{:else}
-					<h2>Conectate a la red Mumbai de Polygon</h2> -->
+
+					<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
+						<BurnGersteToken />
+					</div>
+
+					<!-- 					{:else}
+						<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
+							<BurnGersteToken />
+						</div> -->
 				{/if}
-				<!-- 			{:else}
+			</div>
+			<br />
+			<p>La app está en beta, agregue las monedas haciendo click abajo</p>
+			<div class="tokensAdd">
+				<button on:click={() => addGersteToken()}>Añadir GersteToken</button>
+				<button on:click={() => addUSDCtToken()}>Añadir USDCtToken</button>
+			</div>
+			<TxHashComponent {delayMs} />
+			<!-- 				{:else}
+					<h2>Conectate a la red Mumbai de Polygon</h2> -->
+			<!-- 				{/if}
+ -->
+			<!-- 			{:else}
 				<h2>Conectate a la red Mumbai de Polygon</h2> -->
-			{/if}
-		{/key}
+		{/if}
 	{/key}
+	<!-- 	{/key}
+ -->
 </main>
 
 <style>
@@ -113,5 +134,11 @@
 		flex-direction: row;
 		justify-content: space-evenly;
 		align-items: justify;
+	}
+	.tokensAdd {
+		display: grid;
+		grid-column: 2;
+		gap: 15px;
+		grid-template-columns: repeat(2, 1fr);
 	}
 </style>
