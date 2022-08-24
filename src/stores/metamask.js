@@ -64,8 +64,8 @@ try {
     // Correctly handling chain changes can be complicated.
     // We recommend reloading the page unless you have good reason not to.
     console.log("hubo un cambio de red: ",chainId)
-    window.location.reload();
     handleNetworkSwitch("polygon")
+    window.location.reload();
   }); 
 } catch (err) {
 console.log("error! la cadena esta mal")
