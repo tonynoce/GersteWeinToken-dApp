@@ -57,13 +57,9 @@
 		}
 	});
 
-	function changeChain() {
-		alert('Agregue o conéctese a la red Mumbai de Polygon');
-	} // no carga el modulo de alert
-
 	let delayMs = 1200;
 
-	getWindowEthereum();
+	//getWindowEthereum();
 	handleChainChanged();
 	handleAccountsChanged();
 </script>
