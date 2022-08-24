@@ -50,15 +50,9 @@
 		}
 	});
 
-	let checkChainId = () => {
-		if ($chainId == 80001) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	//$: checkChainId();
+	function changeChain() {
+		alert('Agregue o conéctese a la red Mumbai de Polygon');
+	} // no carga el modulo de alert
 
 	let delayMs = 1200;
 </script>
@@ -67,10 +61,10 @@
 
 <main>
 	<h1>GersteWein Tokens</h1>
-	{#key $chainId}
-		{#if $chainId == 80001}
+	{#key $connected}
+		{#key $chainId}
 			<ConnectEthers />
-			{#key $connected}
+			{#if $chainId == 80001}
 				{#if $connected == true}
 					<Balances {delayMs} />
 
@@ -80,21 +74,24 @@
 							<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
 								<BuyGersteToken />
 							</div>
-						{/if}
 
-						<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
-							<BurnGersteToken />
-						</div>
+							<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
+								<BurnGersteToken />
+							</div>
+						{:else}
+							<div id="selling" transition:fade={{ delay: delayMs + 950, duration: 250 }}>
+								<BurnGersteToken />
+							</div>
+						{/if}
 					</div>
 					<TxHashComponent {delayMs} />
-				{:else}
-					<h2>Conectate a la red Mumbai de Polygon</h2>
+					<!-- 				{:else}
+					<h2>Conectate a la red Mumbai de Polygon</h2> -->
 				{/if}
-			{/key}
-		{:else}
-			<h2>Conectate con Metamask</h2>
-			<ConnectEthers />
-		{/if}
+				<!-- 			{:else}
+				<h2>Conectate a la red Mumbai de Polygon</h2> -->
+			{/if}
+		{/key}
 	{/key}
 </main>
 
