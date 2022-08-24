@@ -24,6 +24,7 @@ const abi = ['function balanceOf(address account) external view returns (uint256
 ]
 
 
+// TODO HANDLE NO METAMASK INSTALLED HERE
 const provider = new ethers.providers.JsonRpcProvider(rpc, chainid)
 //const signer = provider.getSigner()
 
@@ -54,4 +55,3 @@ export const getAllowance = async(owner, spender) => {
         return true;
     }
 }
-
