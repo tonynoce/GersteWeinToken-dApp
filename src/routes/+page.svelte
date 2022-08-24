@@ -98,10 +98,20 @@
 				{/if}
 			</div>
 			<br />
-			<p>La app está en beta, agregue las monedas haciendo click abajo</p>
+			<div style="display: grid;grid-template-columns: repeat(1, 1fr);">
+				<h2>La app está en beta !</h2>
+				<pre style="text-align: left;">
+				Agregue las monedas haciendo click abajo
+				La primera vez hay hacer
+				una transacción aprobando
+				el contrato
+			</pre>
+			</div>
 			<div class="tokensAdd">
-				<button on:click={() => addGersteToken()}>Añadir GersteToken</button>
-				<button on:click={() => addUSDCtToken()}>Añadir USDCtToken</button>
+				<button class="button" style="background-color: #330033;" on:click={() => addGersteToken()}
+					>Añadir GersteToken</button
+				>
+				<button class="button" on:click={() => addUSDCtToken()}>Añadir USDCtToken</button>
 			</div>
 			<TxHashComponent {delayMs} />
 			<!-- 				{:else}
@@ -140,5 +150,17 @@
 		grid-column: 2;
 		gap: 15px;
 		grid-template-columns: repeat(2, 1fr);
+	}
+	.button {
+		background-color: #4caf50;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
 	}
 </style>
