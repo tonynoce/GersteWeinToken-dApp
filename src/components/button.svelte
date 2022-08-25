@@ -2,7 +2,7 @@
 	export let buttonText;
 </script>
 
-<button class="button" on:click>{buttonText}</button>
+<button class="button" on:click on:keydown>{buttonText}</button>
 
 <style>
 	.button {

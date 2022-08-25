@@ -8,8 +8,6 @@
 
 	import Button from './button.svelte';
 
-	let buttonText = 'Comprar GersteWeinToken';
-
 	let amountToBuy = 0;
 
 	export let mintTokencitoV2 = async () => {
@@ -43,6 +41,19 @@
 			amountToBuy = 0;
 		}
 	};
+
+	if (amountToBuy == null) {
+		console.log('son null');
+	}
+
+	$: amountToBuy;
+
+	const notNullPlz = () => {
+		/* if (amountToBuy == null) { */
+		console.log('son null');
+		amountToBuy = 0;
+		/* 	} */
+	};
 </script>
 
 <main>
@@ -56,9 +67,20 @@
 				<button disabled>Comprar GersteWeinToken</button>
 			{:else}
 				<h1>{amountToBuy}</h1>
-				<input type="number" id="amountToBuy" min="0" max="999" bind:value={amountToBuy} />
+				<input
+					type="number"
+					class="input"
+					id="amountToBuy"
+					min="0"
+					max="999"
+					bind:value={amountToBuy}
+				/>
 				<br /><br />
-				<Button buttonText="Comprar GersteWeinToken" on:click={() => mintTokencitoV2()} />
+				<Button
+					buttonText="Comprar GersteWeinToken"
+					on:click={() => mintTokencitoV2()}
+					on:keydown={() => console.log('son null')}
+				/>
 				<!-- 				<button class="button" on:click={() => mintTokencitoV2()}>Comprar GersteWeinToken</button>
  -->
 				<br />

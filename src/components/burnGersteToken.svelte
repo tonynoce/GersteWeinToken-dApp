@@ -56,7 +56,14 @@
 				<button disabled>Vender GersteWeinToken</button>
 			{:else}
 				<h1>{amountToBurn}</h1>
-				<input type="number" id="amountToBurn" min="0" max="999" bind:value={amountToBurn} />
+				<input
+					type="number"
+					class="input"
+					id="amountToBurn"
+					min="0"
+					max="999"
+					bind:value={amountToBurn}
+				/>
 				<br /><br />
 				<!-- 				<button class="button" on:click={() => burnTokencito()}>Vender GersteWeinToken</button>
  -->
