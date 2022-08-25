@@ -6,29 +6,9 @@
 	import { txHash, getBalance, getAllowance } from '../stores/stores';
 	import { GWTContractAddress, USDCtContractAddress } from '../stores/stores';
 
+	import Button from './button.svelte';
+
 	let amountToBurn = 0;
-
-	/* 	async function burnTokencito() {
-		try {
-			const amountTokens = document.getElementById('amountToBurn')?.value;
-			console.log(amountTokens);
-			if (amountTokens == 0) {
-				console.log('Elija un importe válido');
-			} else {
-				const amount = ethers.utils.parseEther(amountTokens);
-				const tx = await $contracts.GersteTokenCont.burnMeSome(amount);
-				console.log(tx.hash);
-				let txReceipt = tx.hash;
-				$txHash = txReceipt;
-
-				return tx.hash;
-			}
-		} catch (e) {
-			console.log(e);
-			console.log('No posee suficientes GersteWeinTokens para cambiar');
-			//txHash.update(tx.hash);
-		}
-	} */
 
 	export let burnTokencito = async () => {
 		try {
@@ -78,8 +58,14 @@
 				<h1>{amountToBurn}</h1>
 				<input type="number" id="amountToBurn" min="0" max="999" bind:value={amountToBurn} />
 				<br /><br />
-				<button on:click={() => burnTokencito()}>Vender GersteWeinToken</button>
+				<!-- 				<button class="button" on:click={() => burnTokencito()}>Vender GersteWeinToken</button>
+ -->
+				<Button buttonText="Vender GersteWeinToken" on:click={() => burnTokencito()} />
 			{/if}
 		</div>
 	{/if}
 </main>
+
+<style>
+	@import '../css/styles.css';
+</style>

@@ -16,6 +16,7 @@
 		contracts
 	} from 'svelte-ethers-store';
 
+	import { beforeUpdate, afterUpdate } from 'svelte';
 	import { onMount } from 'svelte';
 	import { ethers } from 'ethers';
 	import { fade } from 'svelte/transition';
@@ -39,6 +40,8 @@
 		getWindowEthereum
 	} from '../stores/metamask';
 
+	import Onboarding from './onboarding/+page.svelte';
+
 	// contracts store
 
 	defaultEvmStores.attachContract('GersteTokenCont', $GWTContractAddress, $GWTAbi);
@@ -52,6 +55,7 @@
 	onMount(() => {
 		try {
 			defaultEvmStores.setProvider();
+			console.log($connected);
 		} catch (e) {
 			console.log(e);
 		}
@@ -59,25 +63,35 @@
 
 	let delayMs = 1200;
 
+	const isInstalled = async () => {
+		if ($connected === undefined) {
+			console.log('hay que hacer onboarding');
+			import('./onboarding/+page.svelte');
+		}
+	};
+
 	//getWindowEthereum();
 	handleChainChanged();
 	handleAccountsChanged();
+
+	afterUpdate(() => {
+		isInstalled();
+	});
 </script>
 
 <head> <title>GersteWein Tokens !</title> </head>
 
 <main>
 	<h1>GersteWein Tokens</h1>
-	{#key $connected}
-		<!-- {#key $chainId} -->
-		<ConnectEthers />
-		<!-- 			{#if $chainId == 80001}
+	<!-- 	<button on:click={() => onboarding.startOnboarding()}>onboarding</button>
  -->
+	{#key $connected}
+		<ConnectEthers />
 		{#if $connected == true}
 			<Balances {delayMs} />
 
 			<CheckAllowance {delayMs} />
-			<div class="flex-container">
+			<div class="tokensAdd">
 				{#if $allowanceStore == true}
 					<div id="buying" transition:fade={{ delay: delayMs + 800, duration: 500 }}>
 						<BuyGersteToken />
@@ -94,69 +108,37 @@
 				{/if}
 			</div>
 			<br />
-			<div style="display: grid;grid-template-columns: repeat(1, 1fr);">
+			<div class="betaText">
 				<h2>La app está en beta !</h2>
 				<pre style="text-align: left;">
-				Agregue las monedas haciendo click abajo
-				La primera vez hay hacer
-				una transacción aprobando
-				el contrato
+Agregue las monedas haciendo click abajo
+La primera vez hay hacer
+una transacción aprobando
+el contrato
 			</pre>
 			</div>
 			<div class="tokensAdd">
-				<button class="button" style="background-color: #330033;" on:click={() => addGersteToken()}
-					>Añadir GersteToken</button
-				>
+				<button class="button" on:click={() => addGersteToken()}>Añadir GersteToken</button>
 				<button class="button" on:click={() => addUSDCtToken()}>Añadir USDCtToken</button>
 			</div>
 			<TxHashComponent {delayMs} />
-			<!-- 				{:else}
-					<h2>Conectate a la red Mumbai de Polygon</h2> -->
-			<!-- 				{/if}
- -->
-			<!-- 			{:else}
-				<h2>Conectate a la red Mumbai de Polygon</h2> -->
+		{:else}
+			<Onboarding />
 		{/if}
-	{/key}
-	<!-- 	{/key}
+		<!-- 		<a href="/onboarding">Instalemos Metamask !</a>
  -->
+	{/key}
 </main>
 
+<svelte:window on:load={() => isInstalled()} />
+
 <style>
+	@import '../css/styles.css';
+
 	:global(body) {
 		background-color: rgb(27, 27, 27);
 		font-family: sans-serif;
 		color: white;
 		text-align: center;
-	}
-
-	h1 {
-		color: white;
-		font-family: sans-serif;
-		text-align: center;
-	}
-	.flex-container {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: justify;
-	}
-	.tokensAdd {
-		display: grid;
-		grid-column: 2;
-		gap: 15px;
-		grid-template-columns: repeat(2, 1fr);
-	}
-	.button {
-		background-color: #4caf50;
-		border: none;
-		color: white;
-		padding: 15px 32px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		margin: 4px 2px;
-		cursor: pointer;
 	}
 </style>

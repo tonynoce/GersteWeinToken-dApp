@@ -17,7 +17,7 @@
 			<br />
 		</p>
 	</div>
-	<div id="accountBalances" class="flex-container">
+	<div id="accountBalances" class="balances">
 		<div>
 			<p transition:fade={{ delay: delayMs * 3, duration: 250 }}><UsdCtBalance /></p>
 		</div>
@@ -28,10 +28,5 @@
 </main>
 
 <style>
-	.flex-container {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: justify;
-	}
+	@import '../css/styles.css';
 </style>

@@ -6,6 +6,10 @@
 	import { txHash, getBalance, getAllowance } from '../stores/stores';
 	import { GWTContractAddress, USDCtContractAddress } from '../stores/stores';
 
+	import Button from './button.svelte';
+
+	let buttonText = 'Comprar GersteWeinToken';
+
 	let amountToBuy = 0;
 
 	export let mintTokencitoV2 = async () => {
@@ -54,9 +58,15 @@
 				<h1>{amountToBuy}</h1>
 				<input type="number" id="amountToBuy" min="0" max="999" bind:value={amountToBuy} />
 				<br /><br />
-				<button on:click={() => mintTokencitoV2()}>Comprar GersteWeinToken</button>
+				<Button buttonText="Comprar GersteWeinToken" on:click={() => mintTokencitoV2()} />
+				<!-- 				<button class="button" on:click={() => mintTokencitoV2()}>Comprar GersteWeinToken</button>
+ -->
 				<br />
 			{/if}
 		</div>
 	{/if}
 </main>
+
+<style>
+	@import '../css/styles.css';
+</style>

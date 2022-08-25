@@ -15,11 +15,11 @@
 
 	import { fade } from 'svelte/transition';
 
-	/* 	function connectToDapp() {
+	function connectToDapp() {
 		defaultEvmStores.setProvider();
 		//userAddress = $signerAddress;
 		return true;
-	} */
+	}
 
 	const delayMs = 600;
 

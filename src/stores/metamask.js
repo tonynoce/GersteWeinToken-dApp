@@ -1,5 +1,4 @@
 // pedazo de codigo de ethers-store
-
 const getGlobalObject = () => {
     if (typeof globalThis !== 'undefined') {
       return globalThis
@@ -20,6 +19,7 @@ export const getWindowEthereum = () => {
     try {
       if (getGlobalObject().ethereum) return getGlobalObject().ethereum
     } catch (err) {
+      console.log("Aca pasa algo")
       console.error('[svelte-ethers-store] no globalThis.ethereum object')
     }
   }

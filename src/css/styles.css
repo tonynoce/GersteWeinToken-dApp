@@ -1,0 +1,45 @@
+h1 {
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+}
+.balances {
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(2, 15em);
+    justify-content: space-evenly;
+}
+.tokensAdd {
+    display: grid;
+    grid-column: 2;
+    gap: 5px;
+    grid-template-columns: repeat(2, 0fr);
+    text-align: center;
+    justify-content: space-evenly;
+}
+.button {
+    background-color: #01426d;
+    border: none;
+    color: white;
+    width: center;
+    height: center;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button:hover{
+    background-color: #3a3a3a;
+    box-shadow: 0px 7px 15px rgba(10, 182, 235, 0.15);
+}
+.betaText{
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(1, 15em);
+    justify-content: space-evenly;
+    text-align: center;
+
+}

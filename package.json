@@ -25,6 +25,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@metamask/onboarding": "^1.0.1",
 		"svelte-ethers-store": "^2.5.7"
 	}
 }
