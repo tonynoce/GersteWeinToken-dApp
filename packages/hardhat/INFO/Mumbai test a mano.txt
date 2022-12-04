@@ -1,0 +1,4 @@
+En este link hay un test hecho a manopla del contrato probando sus funciones con la cuenta creadora:
+https://mumbai.polygonscan.com/address/0xC45d511faC07A484f9875C823eA495fb7079Bd88
+
+=> Los test internos dieron por asentado que el manejo de ownership funcionaba.

@@ -1,0 +1,97 @@
+import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import { expect } from "chai";
+import { ethers } from "hardhat";
+
+
+
+// 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174 //usdcpolygon
+
+
+/**
+ * testing begins here
+ */
+describe("GersteWeinToken", function () {
+  // We define a fixture to reuse the same setup in every test.
+  // We use loadFixture to run this setup once, snapshot that state,
+  // and reset Hardhat Network to that snapshot in every test.
+  async function deployUSDcoinAndApprove() {
+    const RPCURL = "https://polygon-mainnet.g.alchemy.com/v2/EcH5eGd4UlbTkiVOS6ObkKejTqKix36g";
+
+    const APIKEY = "EcH5eGd4UlbTkiVOS6ObkKejTqKix36g";
+    const CHAINID = "137";
+
+    const provider = new ethers.providers.AlchemyProvider(CHAINID, APIKEY);
+    //const signer = provider.getSigner();
+    const [owner, otherAccount, thirdAccount] = await ethers.getSigners();
+
+    const ABI = ["function approve(address spender, uint256 amount) external",
+      "function transferFrom(address sender, address recipient,uint256 amount) external",
+      ""];
+    const usdcoin = new ethers.Contract("0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", ABI, owner);
+    // Contracts are deployed using the first signer/account by default
+
+    //    const USDcoin = await ethers.getContractFactory("USDcoin");
+
+    const GersteWeinToken = await ethers.getContractFactory("GersteWeinToken");
+    const gersteweintoken = await GersteWeinToken.deploy();
+    console.log(`The gersteweintoken address is: ${gersteweintoken}`)
+
+    /**
+     * set allowance
+     */
+    const allowanceToApprove = ethers.utils.parseEther("999");
+
+    const getAllowance = await usdcoin.approve(gersteweintoken.address, allowanceToApprove);
+    //expect(await usdcoin.allowance(owner.address, gersteweintoken.address)).to.equal(allowanceToApprove);
+    console.log("Allowance transaction: ", getAllowance.blockHash);
+    console.log("The allowance now is: ", getAllowance.data);
+
+    return { usdcoin, gersteweintoken, getAllowance };
+  }
+
+  async function deployGersteWeinToken() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount, thirdAccount] = await ethers.getSigners();
+
+    const ABI = ["function approve(address spender, uint256 amount) external",
+      "function transferFrom(address sender, address recipient,uint256 amount) external",
+      ""];
+    const usdcoin = new ethers.Contract("0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", ABI, owner);
+
+    const price = 1;
+
+    const GersteWeinToken = await ethers.getContractFactory("GersteWeinToken");
+    const gersteweintoken = await GersteWeinToken.deploy();
+    return { usdcoin, gersteweintoken, owner, otherAccount, thirdAccount, price };
+  }
+
+  describe("Deployment", function () {
+    it("Should set the right owner", async function () {
+      const { gersteweintoken, owner } = await loadFixture(deployGersteWeinToken);
+      expect(await gersteweintoken.owner()).to.equal(owner.address);
+    });
+    it("Should set the admin role to the owner", async function () {
+      const { gersteweintoken, owner } = await loadFixture(deployGersteWeinToken);
+      expect(await gersteweintoken.admin()).to.equal(owner.address);
+    })
+  });
+
+  describe("Minting process", function () {
+    it("Should approve USDcoin allowance and then mint", async function () {
+      const [owner, otherAccount, thirdAccount] = await ethers.getSigners();
+      const { usdcoin, gersteweintoken, getAllowance } = await deployUSDcoinAndApprove();
+      const allowanceToApprove = ethers.utils.parseEther("999");
+      expect(await usdcoin.allowance(owner.address, gersteweintoken.address)).to.equal(allowanceToApprove);
+
+      const amountToMint = ethers.utils.parseEther("10");
+
+      console.log("Minting: ", ethers.utils.formatEther(amountToMint.toString()));
+      await gersteweintoken.mintMeSome(amountToMint);
+
+      expect(await gersteweintoken.balanceOf(owner.address)).to.equal(amountToMint);
+    })
+  })
+
+});
+
